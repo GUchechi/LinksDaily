@@ -10,11 +10,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API } from "../config";
 
 export default function Signup({ navigation }) {
-  const [state, setState] = useContext(AuthContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [state, setState] = useContext(AuthContext);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -36,13 +36,13 @@ export default function Signup({ navigation }) {
       } else {
         // Save to context
         setState(data);
-        navigation.navigate("Home");
-
+        
         // save response in async storage
         await AsyncStorage.setItem("@auth", JSON.stringify(data));
         setLoading(false);
         console.log("SIGN IN SUCCESS => ", data);
         Alert.alert("Success!", "Sign up successful");
+        navigation.navigate("Home");
       }
     } catch (error) {
       Alert.alert("Failed", "Sign up failed. Try again");

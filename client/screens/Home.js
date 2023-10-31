@@ -1,9 +1,10 @@
 import React, { useContext } from "react";
+import { AuthContext } from "../context/auth";
 import { StyleSheet, Text, SafeAreaView, View } from "react-native";
 import FooterTabs from "../components/nav/FooterTabs";
 
 export default function Home() {
-
+  const [state, setState] = useContext(AuthContext);
 
   return (
     <SafeAreaView style={styles.container}>

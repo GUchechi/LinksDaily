@@ -33,12 +33,14 @@ export default function Signin({ navigation }) {
       } else {
         // save in context
         setState(data);
-        navigation.navigate("Home");
-
+        
         // save response in async storage
         await AsyncStorage.setItem("@auth", JSON.stringify(data));
         setLoading(false);
         Alert.alert("Success", "Sign in successful");
+
+        // redirect
+        navigation.navigate("Home");
       }
     } catch (error) {
       Alert.alert("Failed", "Sign in failed. Try again");

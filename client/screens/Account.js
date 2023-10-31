@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View, 
 } from "react-native";
 import axios from "axios";
 import UserInput from "../components/auth/UserInput";
@@ -42,6 +42,7 @@ export default function Account({ navigation }) {
     }
   }, [state]);
 
+  // Handle Submit
   const handleSubmit = async () => {
     setLoading(true);
     // api request
@@ -62,6 +63,7 @@ export default function Account({ navigation }) {
     }
   };
 
+  // Upload Image
   const handleUpload = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
