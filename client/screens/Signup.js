@@ -5,6 +5,7 @@ import UserInput from "../components/auth/UserInput";
 import SubmitButton from "../components/auth/SubmitButton";
 import CircleLogo from "../components/auth/CircleLogo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { API } from "../config";
 
 export default function Signup({ navigation }) {
   const [name, setName] = useState("");
@@ -20,15 +21,22 @@ export default function Signup({ navigation }) {
       return;
     }
     try {
-      const { data } = await axios.post("http://localhost:8000/api/signup", {
+      const { data } = await axios.post(`${API}/signup`, {
         name,
         email,
         password,
       });
-      setLoading(false);
-      console.log("SIGN IN SUCCESS => ", data);
-      Alert.alert("Success!", "Sign up successful");
+
+      if (data.error) {
+        alert(data.error);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        console.log("SIGN IN SUCCESS => ", data);
+        Alert.alert("Success!", "Sign up successful");
+      }
     } catch (error) {
+      Alert.alert("Failed", "Sign up failed. Try again");
       console.log(error);
       setLoading(false);
     }

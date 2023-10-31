@@ -1,0 +1,1 @@
+export const API = 'https://smooth-boxes-cut.loca.lt/api'
