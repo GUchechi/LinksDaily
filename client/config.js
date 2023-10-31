@@ -1,1 +1,1 @@
-export const API = 'https://funny-bats-share.loca.lt/api'
+export const API = 'https://legal-icons-give.loca.lt/api'
