@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View } from "react-native";
+import { Tab } from "./Tab";
 
 export default function FooterTabs() {
   return (
@@ -11,26 +12,10 @@ export default function FooterTabs() {
         justifyContent: "space-between",
       }}
     >
-      <TouchableOpacity>
-        <>
-          <Text>Home</Text>
-        </>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <>
-          <Text>Post</Text>
-        </>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <>
-          <Text>Links</Text>
-        </>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <>
-          <Text>Account</Text>
-        </>
-      </TouchableOpacity>
+      <Tab text="Home" name="home" />
+      <Tab text="Post" name="plus-square" />
+      <Tab text="Links" name="list-ol" />
+      <Tab text="Account" name="user" />
     </View>
   );
 }
