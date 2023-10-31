@@ -1,1 +1,1 @@
-export const API = 'https://smooth-boxes-cut.loca.lt/api'
+export const API = 'https://funny-bats-share.loca.lt/api'

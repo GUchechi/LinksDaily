@@ -9,7 +9,7 @@ const CircleLogo = () => (
     }}
   >
     <Image
-      source={require("../../assets/logo1.png")}
+      source={require("../../assets/logo-splash.png")}
       style={{ width: 150, height: 150, marginVertical: 20 }}
     />
   </View>

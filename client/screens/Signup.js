@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Alert, StyleSheet, Text, ScrollView, View } from "react-native";
 import axios from "axios";
+import { AuthContext } from "../context/auth";
 import UserInput from "../components/auth/UserInput";
 import SubmitButton from "../components/auth/SubmitButton";
 import CircleLogo from "../components/auth/CircleLogo";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API } from "../config";
 
 export default function Signup({ navigation }) {
+  const [state, setState] = useContext(AuthContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,6 +34,12 @@ export default function Signup({ navigation }) {
         alert(data.error);
         setLoading(false);
       } else {
+        // Save to context
+        setState(data);
+        navigation.navigate("Home");
+
+        // save response in async storage
+        await AsyncStorage.setItem("@auth", JSON.stringify(data));
         setLoading(false);
         console.log("SIGN IN SUCCESS => ", data);
         Alert.alert("Success!", "Sign up successful");
