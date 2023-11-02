@@ -16,14 +16,20 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API } from "../config";
 import { AuthContext } from "../context/auth";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import * as ImagePicker from "expo-image-picker";
 
 export default function Account({ navigation }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [image, setImage] = useState({});
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  //
+  const [uploadImage, setUploadImage] = useState("");
+  const [image, setImage] = useState({
+    url: "",
+    public_id: "",
+  });
   // context
   const [state, setState] = useContext(AuthContext);
 
@@ -68,7 +74,30 @@ export default function Account({ navigation }) {
     }
   };
 
-  const handleUpload = () => {};
+  const handleUpload = async () => {
+    let permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+    // console.log(permissionResult);
+    // return;
+    if (permissionResult.granted === false) {
+      alert("Camera access is required");
+      return;
+    }
+    // get image from image
+    let pickerResult = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      base64: true,
+    });
+    // console.log("PICKER RESULT => ", pickerResult);
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+    // save to state for preview
+    let base64Image = `data:image/jpg;base64,${pickerResult.base64}`;
+    setUploadImage(base64Image);
+    // send to backend for uploading to cloudinary
+  };
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
@@ -77,7 +106,12 @@ export default function Account({ navigation }) {
           {image && image.url ? (
             <Image
               source={{ uri: image.url }}
-              style={{ width: 200, height: 200, marginVertical: 20 }}
+              style={{
+                height: 190,
+                width: 190,
+                borderRadius: 100,
+                marginVertical: 20,
+              }}
             />
           ) : (
             <TouchableOpacity onPress={() => handleUpload}>
@@ -85,6 +119,19 @@ export default function Account({ navigation }) {
             </TouchableOpacity>
           )}
         </CircleLogo>
+
+        {image && image.url ? (
+          <TouchableOpacity onPress={() => handleUpload}>
+            <FontAwesome5
+              name="camera"
+              size={25}
+              color="orange"
+              style={{ marginTop: -5, marginBottom: 10, alignSelf: "center" }}
+            />
+          </TouchableOpacity>
+        ) : (
+          <></>
+        )}
 
         <View>
           <Text
@@ -101,9 +148,9 @@ export default function Account({ navigation }) {
           <Text
             style={{
               textAlign: "center",
-              fontSize: 25,
+              fontSize: 20,
               color: "#333",
-              fontWeight: "400",
+              fontWeight: "200",
               paddingBottom: 10,
             }}
           >
@@ -112,9 +159,9 @@ export default function Account({ navigation }) {
           <Text
             style={{
               textAlign: "center",
-              fontSize: 20,
+              fontSize: 15,
               color: "#333",
-              fontWeight: "300",
+              fontWeight: "100",
               paddingBottom: 50,
             }}
           >
