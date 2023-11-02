@@ -77,12 +77,14 @@ export default function Account({ navigation }) {
   const handleUpload = async () => {
     const permissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
+
     if (permissionResult.granted === false) {
       Alert.alert("Permission Required", "Camera access is required");
       return;
     }
+
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -93,9 +95,30 @@ export default function Account({ navigation }) {
     if (!result.canceled) {
       setUploadImage(result.assets[0].uri);
 
-      // Send to backend for uploading to cloudinary
-      const filePath = Platform.OS === 'ios' ? result.uri.replace('file://', '') : result.path;
-      
+      try {
+        const token = state && state.token ? state.token : "";
+        const formData = new FormData();
+        formData.append("image", {
+          uri: result.assets[0].uri,
+          name: "image.jpg",
+          type: "image/jpg",
+        });
+
+        const { data } = await axios.post(`${API}/upload-image`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        console.log("UPLOADED RESPONSE => ", data);
+
+        if (data && data.url && data.public_id) {
+          setImage({ url: data.url, public_id: data.public_id });
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+      }
     }
   };
 

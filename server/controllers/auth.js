@@ -2,11 +2,18 @@ import User from "../models/user";
 import { hashPassword, comparePassword } from "../helpers/auth";
 import jwt from "jsonwebtoken";
 import nanoid from "nanoid";
+import expressJwt from "express-jwt";
 
 // sendgrid
 require("dotenv").config();
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_KEY);
+
+// middleware
+export const requireSignin = expressJwt({
+  secret: process.env.JWT_SECRET,
+  algorithms: ["HS256"],
+});
 
 export const signup = async (req, res) => {
   console.log("HIT SIGNUP");
@@ -20,7 +27,7 @@ export const signup = async (req, res) => {
     }
     if (!email) {
       return res.json({
-        error: "Email is required",
+        error: "Email is required", 
       });
     }
     if (!password || password.length < 6) {
@@ -116,7 +123,7 @@ export const forgotPassword = async (req, res) => {
     from: process.env.EMAIL_FROM,
     to: user.email,
     subject: "Password reset code",
-    html: "<h1>Your password  reset code is: {resetCode}</h1>"
+    html: "<h1>Your password  reset code is: {resetCode}</h1>",
   };
   // send email
   try {
@@ -153,4 +160,8 @@ export const resetPassword = async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+export const uploadImage = async (req, res) => {
+  console.log("upload image > user _id", req.user._id);
 };
