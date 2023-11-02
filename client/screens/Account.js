@@ -96,7 +96,6 @@ export default function Account({ navigation }) {
       setUploadImage(result.assets[0].uri);
 
       try {
-        const token = state && state.token ? state.token : "";
         const formData = new FormData();
         formData.append("image", {
           uri: result.assets[0].uri,
@@ -104,12 +103,7 @@ export default function Account({ navigation }) {
           type: "image/jpg",
         });
 
-        const { data } = await axios.post(`${API}/upload-image`, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        });
+        const { data } = await axios.post(`${API}/upload-image`, formData, {});
 
         console.log("UPLOADED RESPONSE => ", data);
 

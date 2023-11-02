@@ -18,7 +18,7 @@ export default function ScreensNav() {
 
   return (
     <Stack.Navigator
-      initialRouteName="Account"
+      initialRouteName="Home"
       //   screenOptions={{ headerShown: false }}
     >
       {authenticated ? (

@@ -90,7 +90,7 @@ export const signin = async (req, res) => {
     }
     // create signed token
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
+      expiresIn: "3d",
     });
 
     user.password = undefined;
@@ -102,7 +102,7 @@ export const signin = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.status(400).send("Error. Try again.");
-  }
+  } 
 };
 
 export const forgotPassword = async (req, res) => {
@@ -165,3 +165,4 @@ export const resetPassword = async (req, res) => {
 export const uploadImage = async (req, res) => {
   console.log("upload image > user _id", req.user._id);
 };
+ 
