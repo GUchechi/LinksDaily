@@ -1,5 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Alert, StyleSheet, Text, ScrollView, View } from "react-native";
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import axios from "axios";
 import UserInput from "../components/auth/UserInput";
 import SubmitButton from "../components/auth/SubmitButton";
@@ -8,11 +15,12 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { API } from "../config";
 import { AuthContext } from "../context/auth";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 export default function Account({ navigation }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState({});
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -24,7 +32,7 @@ export default function Account({ navigation }) {
       const { name, email, role, image } = state.user;
       setName(name);
       setEmail(email);
-      setRole(role)
+      setRole(role);
     }
   }, [state]);
 
@@ -60,14 +68,59 @@ export default function Account({ navigation }) {
     }
   };
 
+  const handleUpload = () => {};
+
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
       <View style={{ marginVertical: 100 }}>
-        <CircleLogo />
+        <CircleLogo>
+          {image && image.url ? (
+            <Image
+              source={{ uri: image.url }}
+              style={{ width: 200, height: 200, marginVertical: 20 }}
+            />
+          ) : (
+            <TouchableOpacity onPress={() => handleUpload}>
+              <FontAwesome5 name="camera" size={25} color="orange" />
+            </TouchableOpacity>
+          )}
+        </CircleLogo>
 
-        <Text style={styles.text}>{name}</Text>
-        <Text style={styles.text}>{email}</Text>
-        <Text style={styles.text}>{role}</Text>
+        <View>
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 34,
+              color: "#333",
+              fontWeight: "bold",
+              paddingBottom: 10,
+            }}
+          >
+            {name}
+          </Text>
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 25,
+              color: "#333",
+              fontWeight: "400",
+              paddingBottom: 10,
+            }}
+          >
+            {email}
+          </Text>
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 20,
+              color: "#333",
+              fontWeight: "300",
+              paddingBottom: 50,
+            }}
+          >
+            {role}
+          </Text>
+        </View>
 
         <UserInput
           name="PASSWORD"
