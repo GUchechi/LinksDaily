@@ -44,32 +44,20 @@ export default function Account({ navigation }) {
 
   const handleSubmit = async () => {
     setLoading(true);
-    if (!email || !password) {
-      Alert.alert("Warning", "Please fill all fields");
-      setLoading(false);
-      return;
-    }
+    // api request
     try {
-      const { data } = await axios.post(`${API}/signin`, {
-        email,
-        password,
-      });
+      const { data } = await axios.post("/update-password", { password });
       if (data.error) {
         alert(data.error);
         setLoading(false);
       } else {
-        // save in context
-        setState(data);
-        navigation.navigate("Home");
-
-        // save response in async storage
-        await AsyncStorage.setItem("@auth", JSON.stringify(data));
+        alert("👍 Password updated");
+        setPassword("");
         setLoading(false);
-        Alert.alert("Success", "Sign in successful");
       }
-    } catch (error) {
-      Alert.alert("Failed", "Sign in failed. Try again");
-      console.log(error);
+    } catch (err) {
+      alert("Password update failed. Try again.");
+      console.log(err);
       setLoading(false);
     }
   };
@@ -88,32 +76,31 @@ export default function Account({ navigation }) {
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      base64: true,
     });
 
     console.log(result);
 
-    if (!result.canceled) {
-      setUploadImage(result.assets[0].uri);
-
-      try {
-        const formData = new FormData();
-        formData.append("image", {
-          uri: result.assets[0].uri,
-          name: "image.jpg",
-          type: "image/jpg",
-        });
-
-        const { data } = await axios.post(`${API}/upload-image`, formData, {});
-
-        console.log("UPLOADED RESPONSE => ", data);
-
-        if (data && data.url && data.public_id) {
-          setImage({ url: data.url, public_id: data.public_id });
-        }
-      } catch (error) {
-        console.error("Error uploading image:", error);
-      }
+    if (result.canceled === true) {
+      return;
     }
+    // save to state for preview
+    let base64Image = `data:image/jpg;base64,${result.base64}`;
+    setUploadImage(base64Image);
+    // send to backend for uploading to cloudinary
+
+    const { data } = await axios.post("/upload-image", {
+      image: base64Image,
+    });
+    console.log("UPLOADED RESPONSE => ", data);
+    // update async storage
+    const as = JSON.parse(await AsyncStorage.getItem("@auth")); // {user: {}, token: ''}
+    as.user = data;
+    await AsyncStorage.setItem("@auth", JSON.stringify(as));
+    // update context
+    setState({ ...state, user: data });
+    setImage(data.image);
+    alert("👍 Profile image saved");
   };
 
   return (
