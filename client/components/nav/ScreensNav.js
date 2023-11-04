@@ -31,7 +31,7 @@ export default function ScreensNav() {
               headerRight: () => <HeaderTabs />,
             }}
           />
-          <Stack.Screen name="Account" component={Account} options={{}} />
+          {/* <Stack.Screen name="Account" component={Account} options={{}} /> */}
           <Stack.Screen name="Post" component={Post} options={{}} />
           <Stack.Screen name="Links" component={Links} options={{}} />
         </>
