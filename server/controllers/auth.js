@@ -3,7 +3,7 @@ import { hashPassword, comparePassword } from "../helpers/auth";
 import jwt from "jsonwebtoken";
 import nanoid from "nanoid";
 import expressJwt from "express-jwt";
-import {v2 as cloudinary} from 'cloudinary';
+import { v2 as cloudinary } from "cloudinary";
 
 // sendgrid
 require("dotenv").config();
@@ -195,6 +195,28 @@ export const uploadImage = async (req, res) => {
       role: user.role,
       image: user.image,
     });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const updatePassword = async (req, res) => {
+  try {
+    const { password } = req.body;
+    if (password && password.length < 6) {
+      return res.json({
+        error: "Password is required and should be min 6 characters long",
+      });
+    } else {
+      // update db
+      const hashedPassword = await hashPassword(password);
+      const user = await User.findByIdAndUpdate(req.user._id, {
+        password: hashedPassword,
+      });
+      user.password = undefined;
+      user.secret = undefined;
+      return res.json(user);
+    }
   } catch (err) {
     console.log(err);
   }
