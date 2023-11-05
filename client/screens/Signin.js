@@ -33,7 +33,7 @@ export default function Signin({ navigation }) {
       } else {
         // save in context
         setState(data);
-        
+
         // save response in async storage
         await AsyncStorage.setItem("@auth", JSON.stringify(data));
         setLoading(false);
@@ -82,7 +82,6 @@ export default function Signin({ navigation }) {
             style={{ color: "#ff2222" }}
             onPress={() => navigation.navigate("SignUp")}
           >
-            {" "}
             Sign Up
           </Text>
         </Text>

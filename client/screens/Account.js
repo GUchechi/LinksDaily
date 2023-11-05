@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View, 
+  View,
 } from "react-native";
 import axios from "axios";
 import UserInput from "../components/auth/UserInput";
@@ -42,7 +42,8 @@ export default function Account({ navigation }) {
     }
   }, [state]);
 
-  // Handle Submit
+
+  // Handle Submit & Password Update
   const handleSubmit = async () => {
     setLoading(true);
     // api request
