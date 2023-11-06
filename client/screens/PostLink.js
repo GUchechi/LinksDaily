@@ -101,7 +101,7 @@ export default function PostLink() {
           />
         </View>
 
-        <Text>{JSON.stringify(urlPreview, null, 4)}</Text>
+        {/* <Text>{JSON.stringify(urlPreview, null, 4)}</Text> */}
       </ScrollView>
 
       <View style={styles.view}>
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   view: {
-    flex: 1,
+    // flex: 1,
     justifyContent: "flex-end",
   },
   textInput: {
