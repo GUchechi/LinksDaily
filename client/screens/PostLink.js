@@ -7,7 +7,7 @@ import {
   View,
   SafeAreaView,
 } from "react-native";
-import axios from 'axios'
+import axios from "axios";
 import SubmitButton from "../components/auth/SubmitButton";
 import FooterTabs from "../components/nav/FooterTabs";
 import urlRegex from "url-regex";
@@ -42,11 +42,16 @@ export default function PostLink() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
-      
+      const { data } = await axios.post("/post-link", {
+        link,
+        title,
+        urlPreview,
+      });
+      console.log("data=>", data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
