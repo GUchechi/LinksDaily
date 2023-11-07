@@ -7,6 +7,7 @@ import {
   View,
   SafeAreaView,
 } from "react-native";
+import axios from 'axios'
 import SubmitButton from "../components/auth/SubmitButton";
 import FooterTabs from "../components/nav/FooterTabs";
 import urlRegex from "url-regex";
@@ -41,7 +42,13 @@ export default function PostLink() {
     }
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    try {
+      
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
