@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -13,8 +13,10 @@ import FooterTabs from "../components/nav/FooterTabs";
 import urlRegex from "url-regex";
 import ogs from "@uehreka/open-graph-scraper-react-native";
 import PreviewCard from "../components/links/PreviewCard";
+import { LinkContext } from "../context/link";
 
-export default function PostLink() {
+export default function PostLink({navigation}) {
+  const [ links, setLinks ] = useContext(LinkContext);
   const [link, setLink] = useState("");
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
@@ -50,8 +52,15 @@ export default function PostLink() {
         urlPreview,
       });
       console.log("data=>", data);
+      // update link context
+      setLinks([data, ...links]);
+      setTimeout(() => {
+        alert("🎊 Link posted");
+        navigation.navigate("Home");
+      }, 500);
     } catch (error) {
       console.log(error);
+      console.log("Response data:", error.response.data);
     }
   };
 
