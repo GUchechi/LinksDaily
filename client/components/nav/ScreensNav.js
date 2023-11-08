@@ -8,6 +8,7 @@ import HeaderTabs from "./HeaderTabs";
 import Account from "../../screens/Account";
 import Links from "../../screens/Links";
 import PostLink from "../../screens/PostLink";
+import LinkView from "../../screens/LinkView";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +34,7 @@ export default function ScreensNav() {
           />
           <Stack.Screen name="Account" component={Account} />
           <Stack.Screen name="Links" component={Links} />
+          <Stack.Screen name="LinkView" component={LinkView} />
           <Stack.Screen
             name="PostLink"
             component={PostLink}

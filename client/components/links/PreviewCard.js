@@ -5,6 +5,8 @@ export default function PreviewCard({
   ogTitle = "Untitled",
   ogDescription = "No description found...",
   ogImage = "https://via.placeholder.com/500x500.png?text=Image",
+  handlePress = (f) => f,
+  link = {},
 }) {
   return (
     <View
@@ -30,9 +32,9 @@ export default function PreviewCard({
         source={{ uri: ogImage.url }}
       />
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => handlePress(link)}>
         <View style={styles.ogHeading}>
-          <Text  style={styles.ogTitle}>{ogTitle}</Text>
+          <Text style={styles.ogTitle}>{ogTitle}</Text>
           <Text style={styles.ogDescription}>{ogDescription}</Text>
         </View>
       </TouchableOpacity>
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     fontSize: 18,
     fontWeight: "bold",
-    color: "grey"
+    color: "grey",
   },
   ogDescription: {
     fontSize: 15,
