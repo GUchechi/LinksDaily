@@ -51,6 +51,7 @@ export default function PostLink({navigation}) {
         title,
         urlPreview,
       });
+      console.log("clicked")
       console.log("data=>", data);
       // update link context
       setLinks([data, ...links]);

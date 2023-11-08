@@ -1,4 +1,5 @@
 import React from "react";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 
 export default function PreviewCard({
@@ -7,6 +8,7 @@ export default function PreviewCard({
   ogImage = "https://via.placeholder.com/500x500.png?text=Image",
   handlePress = (f) => f,
   link = {},
+  showIcons = false,
 }) {
   return (
     <View
@@ -31,6 +33,38 @@ export default function PreviewCard({
         }}
         source={{ uri: ogImage.url }}
       />
+
+      {showIcons && (
+        <>
+          <View style={{ position: "absolute", right: 20, bottom: 0 }}>
+            <FontAwesome5 name="eye" size={15} color="#ff9900" />
+            <Text
+              style={{
+                fontSize: 16,
+                textAlign: "center",
+              }}
+            >
+              {link.views}
+            </Text>
+          </View>
+
+          <TouchableOpacity
+            style={{ position: "absolute", right: 60, bottom: 0 }}
+            // onPress={() => handleLikePress(link)}
+          >
+            <FontAwesome5 name="heart" size={15} color="#ff9900" />
+            <Text
+              style={{
+                fontSize: 16,
+                textAlign: "center",
+              }}
+              color="#ff9900"
+            >
+              {link.likes.length}
+            </Text>
+          </TouchableOpacity>
+        </>
+      )}
 
       <TouchableOpacity onPress={() => handlePress(link)}>
         <View style={styles.ogHeading}>
