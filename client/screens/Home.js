@@ -42,10 +42,10 @@ export default function Home({ navigation }) {
       <Text
         style={{
           textAlign: "center",
-          fontSize: 30,
+          fontSize: 25,
           color: "grey",
           fontWeight: "bold",
-          paddingVertical: 20,
+          paddingVertical: 10,
         }}
       >
         Recent Links

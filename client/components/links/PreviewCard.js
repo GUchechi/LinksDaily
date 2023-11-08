@@ -4,6 +4,7 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import { LinkContext } from "../../context/link";
 import { AuthContext } from "../../context/auth";
+import IconSet from "./IconSet";
 
 export default function PreviewCard({
   ogTitle = "Untitled",
@@ -40,7 +41,7 @@ export default function PreviewCard({
   return (
     <View
       style={{
-        backgroundColor: "#fff",
+        backgroundColor: "#303030",
         width: "92%",
         height: 280,
         borderRadius: 14,
@@ -49,6 +50,7 @@ export default function PreviewCard({
         shadowOpacity: 0.2,
         shadowRadius: 3,
         marginBottom: 20,
+        marginTop: 20,
       }}
     >
       <Image
@@ -61,37 +63,13 @@ export default function PreviewCard({
         source={{ uri: ogImage.url }}
       />
 
-      {showIcons && (
-        <>
-          <View style={{ position: "absolute", right: 20, bottom: 0 }}>
-            <FontAwesome5 name="eye" size={15} color="#ff9900" />
-            <Text
-              style={{
-                fontSize: 16,
-                textAlign: "center",
-              }}
-            >
-              {link.views}
-            </Text>
-          </View>
-
-          <TouchableOpacity
-            style={{ position: "absolute", right: 60, bottom: 0 }}
-            // onPress={() => handleLikePress(link)}
-          >
-            <FontAwesome5 name="heart" size={15} color="#ff9900" />
-            <Text
-              style={{
-                fontSize: 16,
-                textAlign: "center",
-              }}
-              color="#ff9900"
-            >
-              {link.likes.length}
-            </Text>
-          </TouchableOpacity>
-        </>
-      )}
+      <IconSet
+        handleLikePress={handleLikePress}
+        handleUnLikePress={handleUnLikePress}
+        link={link}
+        showIcons={showIcons}
+        auth={auth}
+      />
 
       <TouchableOpacity onPress={() => handlePress(link)}>
         <View style={styles.ogHeading}>
@@ -110,11 +88,12 @@ const styles = StyleSheet.create({
   ogTitle: {
     paddingTop: 10,
     paddingBottom: 5,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold",
-    color: "grey",
+    color: "#E8E8E8",
   },
   ogDescription: {
     fontSize: 15,
+    color: "#E8E8E8",
   },
 });
