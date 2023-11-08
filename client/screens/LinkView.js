@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { WebView } from "react-native-webview";
 
@@ -15,5 +15,11 @@ export default function PostLink({ route }) {
     }
   }, [route.params?.link]);
 
-  return <WebView startInLoadingState source={{ uri: weblink }} />;
+  return (
+    <WebView
+      showsVerticalScrollIndicator={false}
+      startInLoadingState
+      source={{ uri: weblink }}
+    />
+  );
 }
