@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import axios from "axios";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { LinkContext } from "../../context/link";
+import { AuthContext } from "../../context/auth";
 
 export default function PreviewCard({
   ogTitle = "Untitled",
@@ -10,6 +13,30 @@ export default function PreviewCard({
   link = {},
   showIcons = false,
 }) {
+  // context
+  const [links, setLinks] = useContext(LinkContext);
+  const [auth, setAuth] = useContext(AuthContext);
+
+  const handleLikePress = async (link) => {
+    // console.log("link clicked", link._id);
+    const { data } = await axios.put("/like", { linkId: link._id });
+    setLinks((links) => {
+      const index = links.findIndex((l) => l._id === link._id);
+      links[index] = data;
+      return [...links];
+    });
+  };
+
+  const handleUnLikePress = async (link) => {
+    // console.log("link clicked", link._id);
+    const { data } = await axios.put("/unlike", { linkId: link._id });
+    setLinks((links) => {
+      const index = links.findIndex((l) => l._id === link._id);
+      links[index] = data;
+      return [...links];
+    });
+  };
+
   return (
     <View
       style={{
