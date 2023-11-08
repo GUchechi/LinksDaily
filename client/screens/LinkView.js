@@ -1,12 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { WebView } from "react-native-webview";
 
-export default function LinkView() {
-  return (
-    <View>
-      <Text>LinkView</Text>
-    </View>
-  )
+export default function PostLink({ route }) {
+  const [weblink, setWeblink] = useState("");
+
+  useEffect(() => {
+    if (route.params?.link) {
+      if (route.params.link.link.includes("http" || "https")) {
+        setWeblink(route.params.link.link);
+      } else {
+        setWeblink(`http://${route.params.link.link}`);
+      }
+    }
+  }, [route.params?.link]);
+
+  return <WebView startInLoadingState source={{ uri: weblink }} />;
 }
-
-const styles = StyleSheet.create({})

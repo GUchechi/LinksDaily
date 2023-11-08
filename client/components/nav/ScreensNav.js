@@ -34,7 +34,13 @@ export default function ScreensNav() {
           />
           <Stack.Screen name="Account" component={Account} />
           <Stack.Screen name="Links" component={Links} />
-          <Stack.Screen name="LinkView" component={LinkView} />
+          <Stack.Screen
+            name="LinkView"
+            component={LinkView}
+            options={{
+              title: "",
+            }}
+          />
           <Stack.Screen
             name="PostLink"
             component={PostLink}
