@@ -15,8 +15,10 @@ import { AuthContext } from "../context/auth";
 import { LinkContext } from "../context/link";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-// import { Divider } from "react-native-elements";
+import { Divider } from "react-native-elements";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+
+dayjs.extend(relativeTime);
 
 export default function Profile({ navigation }) {
   const route = useRoute();
@@ -53,23 +55,85 @@ export default function Profile({ navigation }) {
       source={require("../assets/blur.jpeg")}
       style={{ flex: 1, height: "100%" }}
       resizeMode="cover"
-      blurRadius={1}
+      blurRadius={5}
     >
       <View>
         <Text
           style={{
             textAlign: "center",
             fontSize: 25,
-            color: "#fff",
+            color: "#ccc",
             fontWeight: "bold",
-            paddingVertical: 20,
+            paddingTop: 80,
           }}
         >
           Profile
         </Text>
 
         <SafeAreaView>
-          <ScrollView showsVerticalScrollIndicator={false}></ScrollView>
+          <View
+            style={{
+              alignItems: "center",
+              paddingBottom: 20,
+              paddingTop: 20,
+            }}
+          >
+            <Image
+            source={{
+              uri: userProfile?.image?.url
+                ? userProfile.image.url
+                : `https://via.placeholder.com/500x500.png?text=${userProfile?.name?.charAt(
+                    0
+                  )}`,
+            }}
+            style={{
+              height: 100,
+              width: 100,
+              borderRadius: 50,
+            }}
+          />
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: 25,
+                color: "#ccc",
+                fontWeight: "bold",
+                paddingTop: 10,
+              }}
+            >
+              {userProfile.name}
+            </Text>
+
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: 18,
+                color: "#ccc",
+                fontWeight: "bold",
+                paddingTop: 5,
+              }}
+            >
+              {userProfile.role}
+            </Text>
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: 13,
+                color: "#ccc",
+                fontWeight: "bold",
+                paddingTop: 5,
+              }}
+            >
+              Joined {dayjs(userProfile.createdAt).fromNow()}
+            </Text>
+          </View>
+
+          <Divider />
+
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Text>{JSON.stringify(userProfile, null, 4)}</Text>
+            <Text>{JSON.stringify(userLinks, null, 4)}</Text>
+          </ScrollView>
         </SafeAreaView>
       </View>
     </ImageBackground>

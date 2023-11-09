@@ -1,4 +1,5 @@
 import User from "../models/user";
+const Link = require("../models/link");
 import { hashPassword, comparePassword } from "../helpers/auth";
 import jwt from "jsonwebtoken";
 import nanoid from "nanoid";
