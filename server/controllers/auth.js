@@ -135,7 +135,7 @@ export const forgotPassword = async (req, res) => {
   };
   // send email
   try {
-    const data = await sgMail.send(emailData); 
+    const data = await sgMail.send(emailData);
     console.log(data);
     res.json({ ok: true });
   } catch (err) {
@@ -217,6 +217,20 @@ export const updatePassword = async (req, res) => {
       user.secret = undefined;
       return res.json(user);
     }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.userProfile = async (req, res) => {
+  try {
+    const profile = await User.findById(req.params.userId).select(
+      "-password -secret"
+    );
+    const links = await Link.find({ postedBy: req.params.userId }).select(
+      "urlPreview views likes"
+    );
+    return res.json({ profile, links });
   } catch (err) {
     console.log(err);
   }

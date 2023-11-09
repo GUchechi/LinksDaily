@@ -9,7 +9,7 @@ import IconSet from "./IconSet";
 export default function PreviewCard({
   ogTitle = "Untitled",
   ogDescription = "No description found...",
-  ogImage = "https://via.placeholder.com/500x500.png?text=Image",
+  ogImage = { url: "https://via.placeholder.com/500x500.png?text=Image" },
   handlePress = (f) => f,
   link = {},
   showIcons = false,
@@ -23,6 +23,7 @@ export default function PreviewCard({
     const { data } = await axios.put("/like", { linkId: link._id });
     setLinks((links) => {
       const index = links.findIndex((l) => l._id === link._id);
+      data.postedBy = auth.user;
       links[index] = data;
       return [...links];
     });
@@ -33,9 +34,20 @@ export default function PreviewCard({
     const { data } = await axios.put("/unlike", { linkId: link._id });
     setLinks((links) => {
       const index = links.findIndex((l) => l._id === link._id);
+      data.postedBy = auth.user;
       links[index] = data;
       return [...links];
     });
+  };
+
+  const ogImageUrl = (ogImage) => {
+    if (ogImage?.url) {
+      return ogImage.url;
+    } else if (ogImage?.length > 0) {
+      return ogImage[0].url;
+    } else {
+      return "https://via.placeholder.com/500x500.png?text=Image";
+    }
   };
 
   return (
@@ -43,7 +55,7 @@ export default function PreviewCard({
       style={{
         backgroundColor: "#303030",
         width: "92%",
-        height: 280,
+        height: 450,
         borderRadius: 14,
         shadowColor: "#171717",
         shadowOffset: { width: -2, height: 4 },
@@ -60,16 +72,18 @@ export default function PreviewCard({
           borderTopRightRadius: 14,
           borderTopLeftRadius: 14,
         }}
-        source={{ uri: ogImage.url }}
+        source={{ uri: ogImageUrl(ogImage) }}
       />
 
-      <IconSet
-        handleLikePress={handleLikePress}
-        handleUnLikePress={handleUnLikePress}
-        link={link}
-        showIcons={showIcons}
-        auth={auth}
-      />
+      <View style={{ marginBottom: -40 }}>
+        <IconSet
+          handleLikePress={handleLikePress}
+          handleUnLikePress={handleUnLikePress}
+          link={link}
+          showIcons={showIcons}
+          auth={auth}
+        />
+      </View>
 
       <TouchableOpacity onPress={() => handlePress(link)}>
         <View style={styles.ogHeading}>
@@ -86,14 +100,36 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   ogTitle: {
-    paddingTop: 10,
+    paddingTop: 20,
     paddingBottom: 5,
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
     color: "#E8E8E8",
   },
   ogDescription: {
     fontSize: 15,
     color: "#E8E8E8",
+  },
+  shadow: {
+    backgroundColor: "#303030",
+    width: "92%",
+    height: 450,
+    borderRadius: 14,
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    marginBottom: 20,
+    marginTop: 20,
+
+    // Shadow
+    shadowColor: "#333",
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    // android
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
   },
 });

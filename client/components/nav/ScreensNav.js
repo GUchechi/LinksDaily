@@ -6,6 +6,7 @@ import Home from "../../screens/Home";
 import { AuthContext } from "../../context/auth";
 import HeaderTabs from "./HeaderTabs";
 import Account from "../../screens/Account";
+import Profile from "../../screens/Profile";
 import Links from "../../screens/Links";
 import PostLink from "../../screens/PostLink";
 import LinkView from "../../screens/LinkView";
@@ -33,6 +34,17 @@ export default function ScreensNav() {
             }}
           />
           <Stack.Screen name="Account" component={Account} />
+          <Stack.Screen
+            name="Profile"
+            component={Profile}
+            options={({ route }) => ({
+              // title: route.params.name,
+              title: "",
+              headerTransparent: true,
+              headerBackTitle: "",
+              headerTintColor: "#fff" 
+            })}
+          />
           <Stack.Screen name="Links" component={Links} />
           <Stack.Screen
             name="LinkView"

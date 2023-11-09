@@ -1,6 +1,9 @@
 import React from "react";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 export default function IconSet({
   handleLikePress,
@@ -9,38 +12,27 @@ export default function IconSet({
   showIcons,
   auth,
 }) {
+  const navigation = useNavigation();
+
   return (
-    <>
+    <View
+      style={{
+        flexDirection: "row",
+        // position: "absolute",
+        alignItems: "center",
+        justifyContent: "space-between",
+        // bottom: 0,
+        marginBottom: 40,
+        marginTop: 20,
+        marginRight: 20,
+        marginLeft: 20,
+      }}
+    >
       {showIcons && (
         <>
-          <View
-            style={{
-              position: "absolute",
-              right: 20,
-              bottom: 0,
-              marginBottom: 10,
-            }}
-          >
-            <FontAwesome5 name="eye" size={15} color="#ff9900" />
-            <Text
-              style={{
-                fontSize: 16,
-                textAlign: "center",
-                color: "#E8E8E8",
-              }}
-            >
-              {link.views}
-            </Text>
-          </View>
-
           {link?.likes?.includes(auth?.user?._id) ? (
             <TouchableOpacity
-              style={{
-                position: "absolute",
-                right: 60,
-                bottom: 0,
-                marginBottom: 10,
-              }}
+              style={{ alignItems: "center" }}
               onPress={() => handleUnLikePress(link)}
             >
               <FontAwesome5 name="heartbeat" size={15} color="#ff9900" />
@@ -56,12 +48,7 @@ export default function IconSet({
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              style={{
-                position: "absolute",
-                right: 60,
-                bottom: 0,
-                marginBottom: 10,
-              }}
+              style={{ alignItems: "center" }}
               onPress={() => handleLikePress(link)}
             >
               <FontAwesome5 name="heart" size={15} color="#ff9900" />
@@ -77,9 +64,57 @@ export default function IconSet({
               </Text>
             </TouchableOpacity>
           )}
+          <View style={{ alignItems: "center" }}>
+            <FontAwesome5 name="eye" size={15} color="#ff9900" />
+            <Text
+              style={{
+                fontSize: 16,
+                textAlign: "center",
+                color: "#E8E8E8",
+              }}
+            >
+              {link.views}
+            </Text>
+          </View>
+
+          <View style={{ alignItems: "center" }}>
+            <FontAwesome5 name="clock" size={15} color="#ff9900" />
+            <Text
+              style={{
+                fontSize: 16,
+                textAlign: "center",
+                color: "#E8E8E8",
+              }}
+            >
+              {dayjs(link.createdAt).format("DD/MM/YY")}
+            </Text>
+          </View>
+
+          <View style={{ alignItems: "center" }}>
+            <FontAwesome5
+              onPress={() =>
+                navigation.navigate("Profile", {
+                  name: link.postedBy?.name,
+                  _id: link.postedBy?._id,
+                })
+              }
+              name="user"
+              size={15}
+              color="#ff9900"
+            />
+            <Text
+              style={{
+                fontSize: 16,
+                textAlign: "center",
+                color: "#E8E8E8",
+              }}
+            >
+              {link.postedBy?.name}
+            </Text>
+          </View>
         </>
       )}
-    </>
+    </View>
   );
 }
 
