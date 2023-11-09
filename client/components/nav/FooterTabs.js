@@ -36,7 +36,7 @@ export default function FooterTabs({ handlePress }) {
         <Tab
           text="Links"
           name="list-ol"
-          handlePress={() => navigation.navigate("Links")}
+          handlePress={() => navigation.navigate("Profile")}
           screenName="Links"
           routeName={route.name}
         />

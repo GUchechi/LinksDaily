@@ -22,6 +22,7 @@ dayjs.extend(relativeTime);
 
 export default function Profile({ navigation }) {
   const route = useRoute();
+  const routeParamsId = route?.params?._id;
 
   useEffect(() => {
     console.log(route.params);
@@ -37,9 +38,9 @@ export default function Profile({ navigation }) {
   // Get User Profile
   useEffect(() => {
     // console.log(route.params);
-    const fetchUserProfile = async () => {
+    const fetchUserProfile = async (userId) => {
       try {
-        const { data } = await axios.get(`/user-profile/${route.params._id}`);
+        const { data } = await axios.get(`/user-profile/${userId}`);
         // console.log("user profile data => ", data);
         setUserProfile(data.profile);
         setUserLinks(data.links);
@@ -47,7 +48,9 @@ export default function Profile({ navigation }) {
         console.log(err);
       }
     };
-    fetchUserProfile();
+    routeParamsId
+      ? fetchUserProfile(routeParamsId)
+      : fetchUserProfile(auth.user._id);
   }, []);
 
   return (
@@ -79,19 +82,19 @@ export default function Profile({ navigation }) {
             }}
           >
             <Image
-            source={{
-              uri: userProfile?.image?.url
-                ? userProfile.image.url
-                : `https://via.placeholder.com/500x500.png?text=${userProfile?.name?.charAt(
-                    0
-                  )}`,
-            }}
-            style={{
-              height: 100,
-              width: 100,
-              borderRadius: 50,
-            }}
-          />
+              source={{
+                uri: userProfile?.image?.url
+                  ? userProfile.image.url
+                  : `https://via.placeholder.com/500x500.png?text=${userProfile?.name?.charAt(
+                      0
+                    )}`,
+              }}
+              style={{
+                height: 100,
+                width: 100,
+                borderRadius: 50,
+              }}
+            />
             <Text
               style={{
                 textAlign: "center",
@@ -130,9 +133,38 @@ export default function Profile({ navigation }) {
 
           <Divider />
 
+          <View style={{ paddingBottom: 20 }}></View>
+
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Text>{JSON.stringify(userProfile, null, 4)}</Text>
-            <Text>{JSON.stringify(userLinks, null, 4)}</Text>
+            <Text
+              style={{
+                textAlign: "center",
+                fontSize: 20,
+                color: "#b3b3b3",
+                fontWeight: "bold",
+              }}
+            >
+              {userLinks.length} Links
+            </Text>
+
+            {userLinks.map((link) => (
+              <View
+                key={link._id}
+                style={{
+                  paddingVertical: 10,
+                  paddingHorizontal: 20,
+                }}
+              >
+                <Text
+                  style={{ color: "#ccc", fontSize: 20, fontWeight: "bold" }}
+                >
+                  {link?.views} Views
+                </Text>
+                <Text style={{ color: "#ccc", fontSize: 15 }}>
+                  {link?.urlPreview?.ogTitle}
+                </Text>
+              </View>
+            ))}
           </ScrollView>
         </SafeAreaView>
       </View>
