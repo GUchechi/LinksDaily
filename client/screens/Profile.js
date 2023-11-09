@@ -32,9 +32,21 @@ export default function Profile({ navigation }) {
   const [userProfile, setUserProfile] = useState({});
   const [userLinks, setUserLinks] = useState([]);
 
-  useEffect(() =>{
-    
-  },[])
+  // Get User Profile
+  useEffect(() => {
+    // console.log(route.params);
+    const fetchUserProfile = async () => {
+      try {
+        const { data } = await axios.get(`/user-profile/${route.params._id}`);
+        // console.log("user profile data => ", data);
+        setUserProfile(data.profile);
+        setUserLinks(data.links);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserProfile();
+  }, []);
 
   return (
     <ImageBackground
