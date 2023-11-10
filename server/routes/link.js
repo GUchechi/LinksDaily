@@ -9,6 +9,7 @@ const {
   viewCount,
   like,
   unlike,
+  linkDelete
 } = require("../controllers/link");
 const { requireSignin } = require("../controllers/auth");
 
@@ -17,5 +18,5 @@ router.get("/links", links);
 router.put("/view-count/:linkId", viewCount);
 router.put("/like", requireSignin, like);
 router.put("/unlike", requireSignin, unlike);
-
+router.delete("/link-delete/:linkId", requireSignin, linkDelete);
 module.exports = router;

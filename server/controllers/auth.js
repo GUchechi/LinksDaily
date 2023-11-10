@@ -228,11 +228,11 @@ exports.userProfile = async (req, res) => {
     const profile = await User.findById(req.params.userId).select(
       "-password -secret"
     );
-    const links = await Link.find({ postedBy: req.params.userId }).select(
-      "urlPreview views likes"
-    );
+    const links = await Link.find({ postedBy: req.params.userId })
+      .populate("postedBy", "_id")
+      .select("urlPreview views likes");
     return res.json({ profile, links });
   } catch (err) {
     console.log(err);
   }
-};
+};  

@@ -53,6 +53,11 @@ export default function Profile({ navigation }) {
       : fetchUserProfile(auth.user._id);
   }, []);
 
+  // Delete
+  const handleDelete = async (linkId) => {
+    console.log("delete", linkId);
+  };
+
   return (
     <ImageBackground
       source={require("../assets/blur.jpeg")}
@@ -61,7 +66,7 @@ export default function Profile({ navigation }) {
       blurRadius={5}
     >
       <View>
-        <Text
+        {/* <Text
           style={{
             textAlign: "center",
             fontSize: 25,
@@ -71,7 +76,7 @@ export default function Profile({ navigation }) {
           }}
         >
           Profile
-        </Text>
+        </Text> */}
 
         <SafeAreaView>
           <View
@@ -155,14 +160,27 @@ export default function Profile({ navigation }) {
                   paddingHorizontal: 20,
                 }}
               >
-                <Text
-                  style={{ color: "#ccc", fontSize: 20, fontWeight: "bold" }}
-                >
-                  {link?.views} Views
-                </Text>
                 <Text style={{ color: "#ccc", fontSize: 15 }}>
                   {link?.urlPreview?.ogTitle}
                 </Text>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Text
+                    style={{ color: "#ccc", fontSize: 20, fontWeight: "bold" }}
+                  >
+                    {link?.views} Views
+                  </Text>
+                  {auth?.user?._id === link?.postedBy._id && (
+                    <TouchableOpacity onPress={() => handleDelete(link._id)}>
+                      <FontAwesome5 name="trash" color="#ff9900" />
+                    </TouchableOpacity>
+                  )}
+                </View>
               </View>
             ))}
           </ScrollView>
