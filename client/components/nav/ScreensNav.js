@@ -10,6 +10,7 @@ import Profile from "../../screens/Profile";
 import Links from "../../screens/Links";
 import PostLink from "../../screens/PostLink";
 import LinkView from "../../screens/LinkView";
+import TrendingLinks from "../../screens/TrendingLinks";
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,7 @@ export default function ScreensNav() {
             })}
           />
           <Stack.Screen name="Links" component={Links} />
+          <Stack.Screen name="Trending Links" component={TrendingLinks} />
           <Stack.Screen
             name="LinkView"
             component={LinkView}
