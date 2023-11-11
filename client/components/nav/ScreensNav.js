@@ -46,7 +46,13 @@ export default function ScreensNav() {
             })}
           />
           <Stack.Screen name="Links" component={Links} />
-          <Stack.Screen name="Trending Links" component={TrendingLinks} />
+          <Stack.Screen
+            name="Trending Links"
+            component={TrendingLinks}
+            options={{
+              title: "Back",
+            }}
+          />
           <Stack.Screen
             name="LinkView"
             component={LinkView}
