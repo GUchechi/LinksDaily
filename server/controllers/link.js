@@ -12,10 +12,14 @@ exports.postLink = async (req, res) => {
 
 exports.links = async (req, res) => {
   try {
+    const perPage = 2;
+    const page = req.params.page ? req.params.page : 1;
+
     const all = await Link.find()
+      .skip((page - 1) * perPage)
       .populate("postedBy", "_id name")
       .sort({ createdAt: -1 })
-      .limit(500);
+      .limit(perPage);
     res.json(all);
   } catch (err) {
     console.log(err);
@@ -75,5 +79,15 @@ exports.linkDelete = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
+  }
+};
+
+exports.linksCount = async (req, res) => {
+  try {
+    const count = await Link.countDocuments();
+    console.log("count", count);
+    res.json(count);
+  } catch (error) {
+    console.log(error);
   }
 };

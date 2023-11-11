@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/auth";
 import {
   StyleSheet,
@@ -17,6 +17,7 @@ import RenderLinks from "../components/links/RenderLinks";
 export default function TrendingLinks({ navigation }) {
   const [state, setState] = useContext(AuthContext);
   const [links, setLinks] = useContext(LinkContext);
+
 
   useEffect(() => {
     fetchLinks();

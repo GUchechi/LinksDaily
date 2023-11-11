@@ -43,7 +43,7 @@ export default function IconSet({
                   color: "#E8E8E8",
                 }}
               >
-                {link.likes.length}
+                {link?.likes?.length}
               </Text>
             </TouchableOpacity>
           ) : (
@@ -60,7 +60,7 @@ export default function IconSet({
                 }}
                 color="#ff9900"
               >
-                {link.likes.length}
+                {link?.likes?.length}
               </Text>
             </TouchableOpacity>
           )}
