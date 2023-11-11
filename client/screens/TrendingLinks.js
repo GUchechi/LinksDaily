@@ -48,16 +48,17 @@ export default function TrendingLinks({ navigation }) {
           paddingVertical: 10,
         }}
       >
-       Trending Links
+        Trending Links
       </Text>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView horizontal showsVerticalScrollIndicator={false}>
         {links &&
           links.map((link) => (
             <View
               key={link._id}
               style={{
                 alignItems: "center",
+                width: 400,
               }}
             >
               <PreviewCard
