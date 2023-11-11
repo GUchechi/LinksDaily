@@ -42,7 +42,6 @@ export default function Account({ navigation }) {
     }
   }, [state]);
 
-
   // Handle Submit & Password Update
   const handleSubmit = async () => {
     setLoading(true);
@@ -62,6 +61,12 @@ export default function Account({ navigation }) {
       console.log(err);
       setLoading(false);
     }
+  };
+
+  // Sign Out
+  const signOut = async () => {
+    setState({ token: "", user: null });
+    await AsyncStorage.removeItem("@auth");
   };
 
   // Upload Image
@@ -197,6 +202,12 @@ export default function Account({ navigation }) {
         <SubmitButton
           title="Update Password"
           handleSubmit={handleSubmit}
+          loading={loading}
+        />
+
+        <SubmitButton
+          title="Sign Out"
+          handleSubmit={signOut}
           loading={loading}
         />
       </View>
