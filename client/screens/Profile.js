@@ -55,7 +55,27 @@ export default function Profile({ navigation }) {
 
   // Delete
   const handleDelete = async (linkId) => {
-    console.log("delete", linkId);
+    // console.log("delete", linkId);
+    try {
+      const { data } = await axios.delete(`/link-delete/${linkId}`);
+      // console.log("data", data);
+      // update userLinks
+      setUserLinks((links) => {
+        const index = userLinks.findIndex((l) => l._id === linkId);
+        userLinks.splice(index, 1);
+        return [...links];
+      });
+      // update context
+      setLinks((links) => {
+        const index = links.findIndex((l) => l._id === linkId);
+        links.splice(index, 1);
+        return [...links];
+      });
+      alert("🐸 Deleted successfully!");
+    } catch (err) {
+      console.log(err);
+      alert("🐸 Delete failed");
+    }
   };
 
   return (

@@ -38,11 +38,10 @@ export default function ScreensNav() {
             name="Profile"
             component={Profile}
             options={({ route }) => ({
-              // title: route.params.name,
-              title: "Profile",
+              title: route.params?.name || "Profile",
               // headerTransparent: true,
               headerBackTitle: "",
-              // headerTintColor: "#fff" 
+              // headerTintColor: "#fff"
             })}
           />
           <Stack.Screen name="Links" component={Links} />
