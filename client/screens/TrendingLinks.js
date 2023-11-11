@@ -53,22 +53,25 @@ export default function TrendingLinks({ navigation }) {
 
       <ScrollView horizontal showsVerticalScrollIndicator={false}>
         {links &&
-          links.map((link) => (
-            <View
-              key={link._id}
-              style={{
-                alignItems: "center",
-                width: 400,
-              }}
-            >
-              <PreviewCard
-                {...link.urlPreview}
-                handlePress={handlePress}
-                link={link}
-                showIcons="true"
-              />
-            </View>
-          ))}
+          links
+            .sort((a, b) => (a.views < b.views ? 1 : -1))
+            .slice(0, 10)
+            .map((link) => (
+              <View
+                key={link._id}
+                style={{
+                  alignItems: "center",
+                  width: 400,
+                }}
+              >
+                <PreviewCard
+                  {...link.urlPreview}
+                  handlePress={handlePress}
+                  link={link}
+                  showIcons="true"
+                />
+              </View>
+            ))}
       </ScrollView>
 
       <FooterTabs />
