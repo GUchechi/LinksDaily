@@ -12,6 +12,7 @@ import FooterTabs from "../components/nav/FooterTabs";
 import { LinkContext } from "../context/link";
 import axios from "axios";
 import PreviewCard from "../components/links/PreviewCard";
+import RenderLinks from "../components/links/RenderLinks";
 
 export default function TrendingLinks({ navigation }) {
   const [state, setState] = useContext(AuthContext);
@@ -39,7 +40,7 @@ export default function TrendingLinks({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text
+      {/* <Text
         style={{
           textAlign: "center",
           fontSize: 25,
@@ -51,28 +52,35 @@ export default function TrendingLinks({ navigation }) {
         Trending Links
       </Text>
 
-      <ScrollView horizontal showsVerticalScrollIndicator={false}>
-        {links &&
-          links
-            .sort((a, b) => (a.views < b.views ? 1 : -1))
-            .slice(0, 10)
-            .map((link) => (
-              <View
-                key={link._id}
-                style={{
-                  alignItems: "center",
-                  width: 400,
-                }}
-              >
-                <PreviewCard
-                  {...link.urlPreview}
-                  handlePress={handlePress}
-                  link={link}
-                  showIcons="true"
-                />
-              </View>
-            ))}
-      </ScrollView>
+      <RenderLinks
+        links={
+          links &&
+          links.sort((a, b) => (a.views < b.views ? 1 : -1)).slice(0, 3)
+        }
+        handlePress={handlePress}
+      /> */}
+
+      {/* Latest Links */}
+
+      <Text
+        style={{
+          textAlign: "center",
+          fontSize: 25,
+          color: "grey",
+          fontWeight: "bold",
+          paddingVertical: 10,
+        }}
+      >
+        Latest Links
+      </Text>
+
+      <RenderLinks
+        links={
+          links &&
+          links.sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1)).slice(0, 3)
+        }
+        handlePress={handlePress}
+      />
 
       <FooterTabs />
     </SafeAreaView>
