@@ -19,7 +19,7 @@ export default function Search({ value, setValue }) {
         placeholder="Search"
         value={value}
         onChangeText={(text) => setValue(text)}
-        autoCapitalize="nono"
+        autoCapitalize="none"
       />
     </View>
   );

@@ -8,6 +8,7 @@ import {
   Image,
   Text,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import axios from "axios";
 import { useRoute } from "@react-navigation/native";
@@ -34,6 +35,7 @@ export default function Profile({ navigation }) {
   // state
   const [userProfile, setUserProfile] = useState({});
   const [userLinks, setUserLinks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Get User Profile
   useEffect(() => {
@@ -44,6 +46,9 @@ export default function Profile({ navigation }) {
         // console.log("user profile data => ", data);
         setUserProfile(data.profile);
         setUserLinks(data.links);
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
       } catch (err) {
         console.log(err);
       }
@@ -77,6 +82,32 @@ export default function Profile({ navigation }) {
       alert("🐸 Delete failed");
     }
   };
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          alignItems: "center",
+          backgroundColor: "#fff",
+          height: "100%",
+          justifyContent: "center",
+        }}
+      >
+        {/* <ActivityIndicator
+          size="large"
+          color="#00ff00"
+          style={{
+            paddingTop: 100,
+          }}
+        /> */}
+
+        <Image
+          source={require("../assets/loading.gif")}
+          style={{ height: 150, width: 150 }}
+        />
+      </View>
+    );
+  }
 
   return (
     <ImageBackground
