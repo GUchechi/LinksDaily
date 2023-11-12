@@ -102,7 +102,7 @@ export default function Profile({ navigation }) {
         /> */}
 
         <Image
-          source={require("../assets/loading.gif")}
+          source={require("../assets/load.gif")}
           style={{ height: 150, width: 150 }}
         />
       </View>
