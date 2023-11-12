@@ -13,12 +13,14 @@ import { LinkContext } from "../context/link";
 import axios from "axios";
 import PreviewCard from "../components/links/PreviewCard";
 import SubmitButton from "../components/auth/SubmitButton";
+import Search from "../components/links/Search";
 
 export default function Home({ navigation }) {
   const [state, setState] = useContext(AuthContext);
   const [links, setLinks] = useContext(LinkContext);
   const [page, setPage] = useState(1);
   const [linksCount, setLinksCount] = useState(0);
+  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     fetchLinks();
@@ -48,48 +50,58 @@ export default function Home({ navigation }) {
     });
   };
 
+  // Search
+  const Searched = (keyword) => (item) => {
+    return item.urlPreview.ogTitle
+      .toLowerCase()
+      .includes(keyword.toLowerCase());
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Text
-        style={{
-          textAlign: "center",
-          fontSize: 25,
-          color: "grey",
-          fontWeight: "bold",
-          paddingVertical: 10,
-        }}
-      >
-        Recent Links
-      </Text>
+    <>
+      <Search value={keyword} setValue={setKeyword} />
+      <SafeAreaView style={styles.container}>
+        <Text
+          style={{
+            textAlign: "center",
+            fontSize: 25,
+            color: "grey",
+            fontWeight: "bold",
+            paddingVertical: 10,
+          }}
+        >
+          Recent Links
+        </Text>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {links &&
-          links.map((link) => (
-            <View
-              key={link._id}
-              style={{
-                alignItems: "center",
-              }}
-            >
-              <PreviewCard
-                {...link.urlPreview}
-                handlePress={handlePress}
-                link={link}
-                showIcons="true"
-              />
-            </View>
-          ))}
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {links &&
+            links.filter(Searched(keyword)).map((link) => (
+              <View
+                key={link._id}
+                style={{
+                  alignItems: "center",
+                }}
+              >
+                <PreviewCard
+                  {...link.urlPreview}
+                  handlePress={handlePress}
+                  link={link}
+                  showIcons="true"
+                />
+              </View>
+            ))}
 
-        {linksCount > links?.length && (
-          <SubmitButton
-            title="Load More"
-            handleSubmit={() => setPage(page + 1)}
-          />
-        )}
-      </ScrollView>
+          {linksCount > links?.length && (
+            <SubmitButton
+              title="Load More"
+              handleSubmit={() => setPage(page + 1)}
+            />
+          )}
+        </ScrollView>
 
-      <FooterTabs />
-    </SafeAreaView>
+        <FooterTabs />
+      </SafeAreaView>
+    </>
   );
 }
 

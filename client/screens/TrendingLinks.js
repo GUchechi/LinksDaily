@@ -40,8 +40,8 @@ export default function TrendingLinks({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* <Text
+    <ScrollView style={styles.container}>
+      <Text
         style={{
           textAlign: "center",
           fontSize: 25,
@@ -59,7 +59,7 @@ export default function TrendingLinks({ navigation }) {
           links.sort((a, b) => (a.views < b.views ? 1 : -1)).slice(0, 3)
         }
         handlePress={handlePress}
-      /> */}
+      />
 
       {/* Latest Links */}
 
@@ -84,7 +84,7 @@ export default function TrendingLinks({ navigation }) {
       />
 
       <FooterTabs />
-    </SafeAreaView>
+    </ScrollView>
   );
 }
 
