@@ -24,8 +24,8 @@ export const requireSignin = expressJwt({
   algorithms: ["HS256"],
 });
 
+// Sign Up
 export const signup = async (req, res) => {
-  console.log("HIT SIGNUP");
   try {
     // validation
     const { name, email, password } = req.body;
@@ -65,7 +65,6 @@ export const signup = async (req, res) => {
         expiresIn: "7d",
       });
 
-      //   console.log(user);
       const { password, ...rest } = user._doc;
       return res.json({
         token,
@@ -79,8 +78,8 @@ export const signup = async (req, res) => {
   }
 };
 
+// Sign In
 export const signin = async (req, res) => {
-  // console.log(req.body);
   try {
     const { email, password } = req.body;
     // check if our db has user with that email
@@ -118,7 +117,6 @@ export const forgotPassword = async (req, res) => {
   const { email } = req.body;
   // find user by email
   const user = await User.findOne({ email });
-  console.log("USER ===> ", user);
   if (!user) {
     return res.json({ error: "User not found" });
   }
@@ -171,14 +169,13 @@ export const resetPassword = async (req, res) => {
   }
 };
 
+// Upload Image
 export const uploadImage = async (req, res) => {
-  // console.log("upload image > user _id", req.user._id);
   try {
     const result = await cloudinary.uploader.upload(req.body.image, {
       public_id: nanoid(),
       resource_type: "jpg",
     });
-    // console.log("CLOUDINARY RESULT => ", result);
     const user = await User.findByIdAndUpdate(
       req.user._id,
       {
@@ -201,6 +198,7 @@ export const uploadImage = async (req, res) => {
   }
 };
 
+// Update Password
 export const updatePassword = async (req, res) => {
   try {
     const { password } = req.body;
@@ -223,6 +221,7 @@ export const updatePassword = async (req, res) => {
   }
 };
 
+// Retrieving a user's profile
 exports.userProfile = async (req, res) => {
   try {
     const profile = await User.findById(req.params.userId).select(
@@ -235,4 +234,4 @@ exports.userProfile = async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-};  
+};

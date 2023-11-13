@@ -3,7 +3,6 @@ const Link = require("../models/link");
 exports.postLink = async (req, res) => {
   try {
     const link = await new Link({ ...req.body, postedBy: req.user._id }).save();
-    // console.log("saved link => ", link);
     res.json(link);
   } catch (err) {
     console.log(err);

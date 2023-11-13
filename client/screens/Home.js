@@ -39,6 +39,7 @@ export default function Home({ navigation }) {
     linksCount();
   }, []);
 
+  // For Loading More Pages
   const handlePress = async (link) => {
     await axios.put(`/view-count/${link._id}`);
     navigation.navigate("LinkView", { link });

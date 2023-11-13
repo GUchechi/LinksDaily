@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Alert, StyleSheet, Text, ScrollView, View } from "react-native";
+import { Alert, StyleSheet, Text, ScrollView, View, Image } from "react-native";
 import axios from "axios";
 import UserInput from "../components/auth/UserInput";
 import SubmitButton from "../components/auth/SubmitButton";
@@ -23,31 +23,53 @@ export default function Signin({ navigation }) {
       return;
     }
     try {
-      const { data } = await axios.post(`${API}/signin`, {
-        email,
-        password,
-      });
-      if (data.error) {
-        alert(data.error);
-        setLoading(false);
-      } else {
-        // save in context
-        setState(data);
+      setTimeout(async () => {
+        const { data } = await axios.post(`${API}/signin`, {
+          email,
+          password,
+        });
+        if (data.error) {
+          alert(data.error);
+          setLoading(false);
+        } else {
+          // save in context
+          setState(data);
 
-        // save response in async storage
-        await AsyncStorage.setItem("@auth", JSON.stringify(data));
-        setLoading(false);
-        Alert.alert("Success", "Sign in successful");
+          // save response in async storage
+          await AsyncStorage.setItem("@auth", JSON.stringify(data));
+          setLoading(false);
+          Alert.alert("Success", "Sign in successful");
 
-        // redirect
-        navigation.navigate("Home");
-      }
+          // redirect
+          navigation.navigate("Home");
+        }
+      }, 2000);
     } catch (error) {
       Alert.alert("Failed", "Sign in failed. Try again");
       console.log(error);
       setLoading(false);
     }
   };
+
+  // Loading
+  if (loading) {
+    return (
+      <View style={styles.loading}>
+        {/* <ActivityIndicator
+          size="large"
+          color="#00ff00"
+          style={{
+            paddingTop: 100,
+          }}
+        /> */}
+
+        <Image
+          source={require("../assets/load.gif")}
+          style={{ height: 150, width: 150 }}
+        />
+      </View>
+    );
+  }
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>
@@ -110,5 +132,11 @@ const styles = StyleSheet.create({
     color: "#333",
     textAlign: "center",
     marginBottom: 20,
+  },
+  loading: {
+    alignItems: "center",
+    backgroundColor: "#fff",
+    height: "100%",
+    justifyContent: "center",
   },
 });

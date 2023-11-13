@@ -24,6 +24,7 @@ export default function Account({ navigation }) {
   const [role, setRole] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  
   //
   const [uploadImage, setUploadImage] = useState("");
   const [image, setImage] = useState({
@@ -33,6 +34,7 @@ export default function Account({ navigation }) {
   // context
   const [state, setState] = useContext(AuthContext);
 
+  //  Populates the local state with user data when the component mounts.
   useEffect(() => {
     if (state) {
       const { name, email, role, image } = state.user;
