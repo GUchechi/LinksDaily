@@ -25,10 +25,6 @@ export default function Profile({ navigation }) {
   const route = useRoute();
   const routeParamsId = route?.params?._id;
 
-  useEffect(() => {
-    console.log(route.params);
-  }, []);
-
   // context
   const [auth, setAuth] = useContext(AuthContext);
   const [links, setLinks] = useContext(LinkContext);
@@ -40,6 +36,13 @@ export default function Profile({ navigation }) {
   // Get User Profile
   useEffect(() => {
     // console.log(route.params);
+
+    if (routeParamsId) {
+      navigation.setOptions({ title: route.params?.name || "Profile" });
+    } else {
+      navigation.setOptions({ title: auth.user.name || "Profile" });
+    }
+
     const fetchUserProfile = async (userId) => {
       try {
         const { data } = await axios.get(`/user-profile/${userId}`);
