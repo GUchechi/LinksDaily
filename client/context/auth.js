@@ -20,7 +20,7 @@ const AuthProvider = ({ children }) => {
   axios.defaults.baseURL = API;
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-  // handle expired token or 401 error
+  // handle expired token or 401 error, also known as Axios Interceptor
   axios.interceptors.response.use(
     async function (response) {
       return response;
