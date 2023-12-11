@@ -35,6 +35,7 @@ const AuthProvider = ({ children }) => {
     }
   );
 
+  // AsyncStorage 
   useEffect(() => {
     const loadFromAsyncStorage = async () => {
       let data = await AsyncStorage.getItem("@auth");

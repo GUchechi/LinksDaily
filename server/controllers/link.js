@@ -1,5 +1,6 @@
 const Link = require("../models/link");
 
+// Create Link
 exports.postLink = async (req, res) => {
   try {
     const link = await new Link({ ...req.body, postedBy: req.user._id }).save();
@@ -9,6 +10,7 @@ exports.postLink = async (req, res) => {
   }
 };
 
+// Get Links
 exports.links = async (req, res) => {
   try {
     const perPage = 2;

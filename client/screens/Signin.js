@@ -46,7 +46,7 @@ export default function Signin({ navigation }) {
       }, 2000);
     } catch (error) {
       Alert.alert("Failed", "Sign in failed. Try again");
-      console.log(error);
+      // console.log(error);
       setLoading(false);
     }
   };
