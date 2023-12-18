@@ -16,7 +16,6 @@ import SubmitButton from "../components/auth/SubmitButton";
 import Search from "../components/links/Search";
 
 export default function Home({ navigation }) {
-  const [state, setState] = useContext(AuthContext);
   const [links, setLinks] = useContext(LinkContext);
   const [page, setPage] = useState(1);
   const [linksCount, setLinksCount] = useState(0);
