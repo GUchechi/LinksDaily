@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
-import { View, Text, TouchableOpacity, SafeAreaView } from "react-native";
-import { AuthContext } from "../../context/auth";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity, SafeAreaView } from "react-native";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { AuthContext } from "../../context/auth";
 
 const HeaderTabs = () => {
   const [state, setState] = useContext(AuthContext);

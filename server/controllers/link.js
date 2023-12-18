@@ -27,6 +27,7 @@ exports.links = async (req, res) => {
   }
 };
 
+
 exports.viewCount = async (req, res) => {
   try {
     const link = await Link.findByIdAndUpdate(
@@ -41,6 +42,7 @@ exports.viewCount = async (req, res) => {
   }
 };
 
+// Linke Link
 exports.like = async (req, res) => {
   try {
     const link = await Link.findByIdAndUpdate(
@@ -55,7 +57,7 @@ exports.like = async (req, res) => {
     console.log(err);
   }
 };
-
+//unLike Link 
 exports.unlike = async (req, res) => {
   try {
     const link = await Link.findByIdAndUpdate(
@@ -71,6 +73,7 @@ exports.unlike = async (req, res) => {
   }
 };
 
+// Delete link
 exports.linkDelete = async (req, res) => {
   try {
     const link = await Link.findById(req.params.linkId).select("postedBy");
